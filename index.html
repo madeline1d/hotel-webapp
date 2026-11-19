@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hotel Ordering</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🏨%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1 id="biz-name"></h1>
+      <p id="biz-tagline"></p>
+    </div>
+    <nav class="nav">
+      <a href="#menu">Menu</a>
+      <a href="#track">Track Order</a>
+      <button id="cart-btn" class="cart-btn" aria-label="Open cart">
+        🛒 Cart <span id="cart-count" class="badge">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Welcome</h2>
+    <p>Choose your room, meals and services, then place your order in a minute.</p>
+  </section>
+
+  <main>
+    <section id="menu">
+      <div id="category-tabs" class="tabs"></div>
+      <div id="product-grid" class="grid"></div>
+    </section>
+
+    <section id="track" class="panel">
+      <h2>Track Your Order</h2>
+      <form id="track-form" class="inline-form">
+        <input id="track-input" type="text" placeholder="Enter order number, e.g. #001" autocomplete="off" required>
+        <button type="submit" class="btn primary">Check Status</button>
+      </form>
+      <div id="track-result"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span id="footer-info"></span>
+    <div><a href="staff.html" class="staff-link">Staff Login</a></div>
+  </footer>
+
+  <!-- Cart drawer -->
+  <div id="overlay" class="overlay hidden"></div>
+  <aside id="cart-drawer" class="drawer hidden" aria-label="Shopping cart">
+    <div class="drawer-head">
+      <h3>Your Cart</h3>
+      <button id="cart-close" class="icon-btn" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cart-items" class="drawer-body"></div>
+    <div class="drawer-foot">
+      <div class="total-row"><span>Total</span><strong id="cart-total"></strong></div>
+      <button id="checkout-btn" class="btn primary block">Continue to Checkout</button>
+    </div>
+  </aside>
+
+  <!-- Checkout modal -->
+  <div id="checkout-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="drawer-head">
+        <h3 id="modal-title">Checkout</h3>
+        <button id="modal-close" class="icon-btn" aria-label="Close">✕</button>
+      </div>
+
+      <!-- Step 1: form -->
+      <form id="checkout-form" novalidate>
+        <label>Name
+          <input id="f-name" type="text" required autocomplete="name">
+        </label>
+        <label>Contact Number
+          <input id="f-phone" type="tel" required autocomplete="tel" placeholder="e.g. 012-345 6789">
+        </label>
+        <label>Order Type
+          <select id="f-type" required></select>
+        </label>
+        <label>Payment Method
+          <select id="f-payment" required></select>
+        </label>
+        <label>Notes (optional)
+          <textarea id="f-notes" rows="2" placeholder="Room number, dates, special requests..."></textarea>
+        </label>
+        <p id="form-error" class="error hidden"></p>
+        <button type="submit" class="btn primary block">Review Order</button>
+      </form>
+
+      <!-- Step 2: summary -->
+      <div id="checkout-summary" class="hidden">
+        <div id="summary-body"></div>
+        <div class="row-gap">
+          <button id="summary-back" class="btn">Back</button>
+          <button id="place-order" class="btn primary">Place Order</button>
+        </div>
+      </div>
+
+      <!-- Step 3: payment (online methods only; skipped for Pay at Hotel) -->
+      <div id="checkout-payment" class="hidden">
+        <div class="sum-details">
+          <div><span>Amount</span><strong id="pay-amount"></strong></div>
+          <div><span>Method</span><strong id="pay-method"></strong></div>
+        </div>
+        <p class="demo-note">Demo payment: no real money is charged. A real payment gateway will be connected later.</p>
+        <div class="row-gap">
+          <button id="pay-back" class="btn">Back</button>
+          <button id="pay-now" class="btn primary">Pay</button>
+        </div>
+      </div>
+
+      <!-- Step 4: confirmation -->
+      <div id="checkout-success" class="hidden success">
+        <div class="tick">✓</div>
+        <h3>Order Placed!</h3>
+        <p>Your order number is</p>
+        <div id="success-number" class="order-number"></div>
+        <p>Status: <strong id="success-status"></strong></p>
+        <p>Payment: <strong id="success-payment"></strong></p>
+        <p class="muted">The hotel will review and confirm your order.</p>
+        <p class="muted">Keep this number to track your order.</p>
+        <div class="row-gap">
+          <button id="success-track" class="btn">Track Order</button>
+          <button id="success-done" class="btn primary">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="content.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
